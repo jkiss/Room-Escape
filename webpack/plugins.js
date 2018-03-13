@@ -69,6 +69,10 @@ module.exports = {
                 from: '**/*.*',
                 to: 'images',
                 context: 'src/images/copy/'
+            },{
+                from: '**/*.*',
+                to: 'vendor',
+                context: 'src/vendor/copy/'
             }
         ])
     ]

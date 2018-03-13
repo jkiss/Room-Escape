@@ -44,6 +44,9 @@ import { manifest } from './manifest'
         stage_h = $('#roomCanvas').attr('height')
         // circle = new createjs.Shape()
 
+    createjs.Ticker.setFPS(60)
+    createjs.Ticker.addEventListener("tick", stage)
+
     // circle.graphics.beginFill("DeepSkyBlue").drawCircle(0, 0, 50)
     // circle.x = 100
     // circle.y = 100
@@ -53,17 +56,24 @@ import { manifest } from './manifest'
         constructor(props){
             this.bg = null
 
-            this.container = {
+            this.cont = {
                 scene: new createjs.Container(),
                 mask: new createjs.Container()
             }
+
+            this.m = new createjs.Shape(new createjs.Graphics().dr(0,0,500,500)).set({
+                x: 300,
+                y: 300
+            })
         }
 
         init(data){
             let _me = this
 
-            stage.addChild(_me.container.scene)
-            stage.addChild(_me.container.mask)
+            // _me.cont.scene.mask = _me.m
+
+            stage.addChild(_me.cont.scene)
+            stage.addChild(_me.cont.mask)
 
             return _me
         }
@@ -72,10 +82,11 @@ import { manifest } from './manifest'
             let _me = this
 
             _me.bg = new createjs.Bitmap(img)
-            // _me.bg.scale = stage_w / _me.bg.getBounds().width
             _me.bg.name = 'bg'
 
-            _me.container.scene.addChild(this.bg)
+            // _me.bg.mask = _me.m
+
+            _me.cont.scene.addChild(this.bg)
 
             return _me
         }
@@ -92,7 +103,44 @@ import { manifest } from './manifest'
                 _me.showMask()
             })
 
-            _me.container.scene.addChild(cabinet)
+            _me.cont.scene.addChild(cabinet)
+
+            return _me
+        }
+
+        addDrawer(img){
+            let _me = this,
+                drawer,
+                isOpen = false
+
+            drawer = new createjs.Bitmap(img)
+            drawer.name = 'drawer'
+            drawer.x = 454
+            drawer.y = 1083
+
+            let m = new createjs.Shape(new createjs.Graphics().dr(0,0,254,500)).set({
+                x: 454,
+                y: 1173
+            })
+            drawer.mask = m
+
+            drawer.on('click', (e)=>{
+                if(!isOpen){
+                    createjs.Tween.get(drawer)
+                        .to({y: 1173}, 1000, createjs.Ease.getPowInOut(4))
+                        .call(()=>{
+                            isOpen = true
+                        })
+                }else{
+                    createjs.Tween.get(drawer)
+                        .to({y: 1083}, 1000, createjs.Ease.getPowInOut(4))
+                        .call(()=>{
+                            isOpen = false
+                        })
+                }
+            })
+
+            _me.cont.scene.addChild(drawer)
 
             return _me
         }
@@ -105,10 +153,10 @@ import { manifest } from './manifest'
             mask.name = 'mask'
             mask.on('click', (e)=>{
                 console.log('mask', mask.name)
-                _me.container.mask.removeChild(_me.container.mask.getChildByName('mask'))
+                _me.cont.mask.removeChild(_me.cont.mask.getChildByName('mask'))
                 stage.update()
             })
-            _me.container.mask.addChild(mask)
+            _me.cont.mask.addChild(mask)
 
             stage.update()
         }
@@ -134,6 +182,9 @@ import { manifest } from './manifest'
         // createjs.Sound.play("sound");
         scene1.addBg(queue.getResult('scene1_bg'))
         scene1.addCabinet(queue.getResult('scene1_cabinet'))
+        scene1.addDrawer(queue.getResult('scene1_drawer'))
+
+
         scene1.render()
         // document.body.appendChild(image);
     }
