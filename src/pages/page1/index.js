@@ -45,7 +45,7 @@ import { manifest } from './manifest'
         // circle = new createjs.Shape()
 
     createjs.Ticker.setFPS(60)
-    createjs.Ticker.addEventListener("tick", stage)
+    createjs.Ticker.addEventListener('tick', stage)
 
     // circle.graphics.beginFill("DeepSkyBlue").drawCircle(0, 0, 50)
     // circle.x = 100
@@ -74,6 +74,20 @@ import { manifest } from './manifest'
 
             stage.addChild(_me.cont.scene)
             stage.addChild(_me.cont.mask)
+
+            return _me
+        }
+
+        show(){
+            let _me = this
+
+
+            return _me
+        }
+
+        hide(){
+            let _me = this
+
 
             return _me
         }
