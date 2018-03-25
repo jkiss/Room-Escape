@@ -9,17 +9,17 @@
 import scene1_bg from '../../images/scene1/bg.jpg'
 import scene1_bell from '../../images/scene1/bell.png'
 import scene1_hammer from '../../images/scene1/hammer.png'
+import scene1_hammer_pack from '../../images/scene1/hammer-pack.png'
 import scene1_glasses from '../../images/scene1/glasses.png'
 import scene1_grandpa from '../../images/scene1/grandpa.png'
+import scene1_grandpa_glass from '../../images/scene1/grandpa-glass.png'
 import scene1_cabinet from '../../images/scene1/cabinet.png'
-import scene1_cabinet_large from '../../images/scene1/cabinet-large.png'
 import scene1_mural from '../../images/scene1/mural.png'
-import scene1_mural_large from '../../images/scene1/mural-large.png'
 import scene1_envelope from '../../images/scene1/envelope.png'
 import scene1_envelope_open from '../../images/scene1/envelope-open.png'
 import scene1_envelope_piece from '../../images/scene1/envelope-piece.png'
+import scene1_piece1 from '../../images/scene1/piece1.png'
 import scene1_drawer from '../../images/scene1/drawer.png'
-import rope_cursors from '../../images/rope-cursors.png'
 
 let manifest = [
     {
@@ -32,23 +32,23 @@ let manifest = [
         id: 'scene1_hammer',
         src: scene1_hammer
     },{
+        id: 'scene1_hammer_pack',
+        src: scene1_hammer_pack
+    },{
         id: 'scene1_glasses',
         src: scene1_glasses
     },{
         id: 'scene1_grandpa',
         src: scene1_grandpa
     },{
+        id: 'scene1_grandpa_glass',
+        src: scene1_grandpa_glass
+    },{
         id: 'scene1_cabinet',
         src: scene1_cabinet
     },{
-        id: 'scene1_cabinet_large',
-        src: scene1_cabinet_large
-    },{
         id: 'scene1_mural',
         src: scene1_mural
-    },{
-        id: 'scene1_mural_large',
-        src: scene1_mural_large
     },{
         id: 'scene1_envelope',
         src: scene1_envelope
@@ -59,11 +59,11 @@ let manifest = [
         id: 'scene1_envelope_piece',
         src: scene1_envelope_piece
     },{
+        id: 'scene1_piece1',
+        src: scene1_piece1
+    },{
         id: 'scene1_drawer',
         src: scene1_drawer
-    },{
-        id: 'rope_cursors',
-        src: rope_cursors
     }
 ]
 

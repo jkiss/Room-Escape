@@ -1,6 +1,6 @@
 {
-  "name": "web-react-template",
-  "version": "1.2.0",
+  "name": "room-escape",
+  "version": "1.0.0",
   "description": "",
   "dependencies": {
     "babel-polyfill": "^6.26.0",
@@ -37,7 +37,8 @@
     "start": "webpack-dev-server --env=dev --inline --progress",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server --env=dev --inline --progress",
-    "build": "rm -rf build/* && webpack --env=prod --progress --colors --display-error-details"
+    "build": "rm -rf build/* && webpack --env=prod --progress --colors --display-error-details",
+    "gh": "npm run build && rm -rf ./docs && cp -r build docs"
   },
   "keywords": [
     "react",
