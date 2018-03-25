@@ -7,7 +7,7 @@
 
 module.exports = {
     // Deploy
-    public_path: '/game'
+    public_path: '/Room-Escape'
 
     // multi-pages
     ,page1:{ // 你我新时代
