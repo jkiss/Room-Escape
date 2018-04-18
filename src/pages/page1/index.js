@@ -599,6 +599,7 @@ import { manifest } from './manifest'
     /**
      * Preload 
      */
+    let preload_box = $('#preload_box')
     let queue = new createjs.LoadQueue()
     queue.installPlugin(createjs.Sound)
     queue.on('complete', handleComplete, this)
@@ -607,6 +608,8 @@ import { manifest } from './manifest'
     queue.loadManifest(manifest)
 
     function handleComplete(e) {
+        preload_box.css('display', 'none')
+
         createjs.Sound.play('sound_bg', {
             loop: -1
         })
@@ -629,6 +632,8 @@ import { manifest } from './manifest'
     }
     function handleProgress(e) {
         console.log(e.progress)
+        let percent = parseInt(e.progress * 100)
+        preload_box.text(percent + '%')
     }
     
 }(jQuery, window))
