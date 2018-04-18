@@ -62,6 +62,18 @@ module.exports = {
                     }
                 ]
             }
+
+            ,{
+                test: /\.(mp3|mp4)\??.*$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options:{
+                            name: '/sounds/[hash].[ext]'
+                        }
+                    }
+                ]
+            }
         ])
     },
 

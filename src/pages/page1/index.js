@@ -236,7 +236,7 @@ import { manifest } from './manifest'
             mural.rotation = 0
             mural.on('click', (e)=>{
                 console.log('picked')
-                if(BACKPACK.boxs['hammer_pack'].active){
+                if(BACKPACK.boxs['hammer_pack'] && BACKPACK.boxs['hammer_pack'].active){
                     createjs.Tween.get(mural)
                         .to({
                             // rotation: -30,
@@ -253,6 +253,45 @@ import { manifest } from './manifest'
             return _me
         }
 
+        addBell(img){
+            let _me = this,
+                bell,
+                cont = new createjs.Container()
+
+            cont.x = 1250
+            cont.y = 600
+
+            bell = new createjs.Bitmap(img)
+            bell.name = 'bell'
+            // bell.x = -1 * bell.getBounds().width / 2
+            bell.x = -17
+            bell.y = 0
+            bell.scale = 2
+            cont.rotation = 0
+            bell.on('click', (e)=>{
+                console.log('bell')
+                createjs.Tween.get(cont)
+                        .to({
+                            rotation: -30,
+                        }, 150)
+                        .to({
+                            rotation: 30,
+                        }, 300)
+                        .to({
+                            rotation: 0,
+                        }, 150)
+                        .call(()=>{
+                            cont.rotation = 0
+                        })
+            })
+
+            cont.addChild(bell)
+
+            _me.cont.scene.addChild(cont)
+
+            return _me
+        }
+
         addGrandpa(img, img2){
             let _me = this,
                 grandpa
@@ -263,7 +302,7 @@ import { manifest } from './manifest'
             grandpa.y = 916
             grandpa.on('click', (e)=>{
                 console.log('picked')
-                if(BACKPACK.boxs['glasses_pack'].active){
+                if(BACKPACK.boxs['glasses_pack'] && BACKPACK.boxs['glasses_pack'].active){
                     _me.addGrandpaGlasses(img2, ()=>{
                         _me.cont.scene.removeChild(_me.cont.scene.getChildByName('grandpa'))
 
@@ -552,10 +591,13 @@ import { manifest } from './manifest'
     queue.loadManifest(manifest)
 
     function handleComplete(e) {
-        // createjs.Sound.play("sound");
+        createjs.Sound.play('sound_bg', {
+            loop: -1
+        })
         scene1.addBg(queue.getResult('scene1_bg'))
         scene1.addGlasses(queue.getResult('scene1_glasses'))
         scene1.addMural(queue.getResult('scene1_mural'))
+        scene1.addBell(queue.getResult('scene1_bell'))
         scene1.addCabinet(queue.getResult('scene1_cabinet'))
         scene1.addDrawer(queue.getResult('scene1_drawer'))
         scene1.addHammer(queue.getResult('scene1_hammer'), queue.getResult('scene1_hammer_pack'))
