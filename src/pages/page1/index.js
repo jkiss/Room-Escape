@@ -76,6 +76,8 @@ import { manifest } from './manifest'
             }
 
             this.grandpa_get_glasses = false
+
+            this.envelope = null
         }
 
         init(data){
@@ -150,6 +152,7 @@ import { manifest } from './manifest'
             drawer = new createjs.Bitmap(img)
             drawer.name = 'drawer'
             drawer.on('click', (e)=>{
+                createjs.Sound.play('sound_drawer')
                 if(!isOpen){
                     createjs.Tween.get(_me.cont.drawer)
                         .to({y: 1173}, 1000, createjs.Ease.getPowInOut(4))
@@ -237,6 +240,7 @@ import { manifest } from './manifest'
             mural.on('click', (e)=>{
                 console.log('picked')
                 if(BACKPACK.boxs['hammer_pack'] && BACKPACK.boxs['hammer_pack'].active){
+                    createjs.Sound.play('sound_mural')
                     createjs.Tween.get(mural)
                         .to({
                             // rotation: -30,
@@ -256,7 +260,8 @@ import { manifest } from './manifest'
         addBell(img){
             let _me = this,
                 bell,
-                cont = new createjs.Container()
+                cont = new createjs.Container(),
+                droped = false
 
             cont.x = 1250
             cont.y = 600
@@ -269,6 +274,7 @@ import { manifest } from './manifest'
             bell.scale = 2
             cont.rotation = 0
             bell.on('click', (e)=>{
+                createjs.Sound.play('sound_bell')
                 console.log('bell')
                 createjs.Tween.get(cont)
                         .to({
@@ -283,6 +289,20 @@ import { manifest } from './manifest'
                         .call(()=>{
                             cont.rotation = 0
                         })
+                
+                if(!droped){
+                    droped = true
+
+                    createjs.Tween.get(_me.envelope)
+                        .to({
+                            rotation: 0,
+                            y: 1543
+                        }, 800)
+                        .call(()=>{
+                            _me.envelope.rotation = 0
+                            on_door = false
+                        })
+                }
             })
 
             cont.addChild(bell)
@@ -331,6 +351,8 @@ import { manifest } from './manifest'
 
             _me.grandpa_get_glasses = true
 
+            createjs.Sound.play('sound_grandpa')
+
             cb && cb()
 
             return _me
@@ -347,29 +369,19 @@ import { manifest } from './manifest'
                 y: 1055
             })
             
-            envelope = new createjs.Bitmap(img)
-            envelope.name = 'envelope'
-            envelope.x = 1550
-            envelope.y = 940
-            envelope.rotation = 35
-            envelope.mask = m
-            envelope.on('click', (e)=>{
-                if(on_door){
-                    createjs.Tween.get(envelope)
-                        .to({
-                            rotation: 0,
-                            y: 1543
-                        }, 800)
-                        .call(()=>{
-                            envelope.rotation = 0
-                            on_door = false
-                        })
-                }else if(_me.grandpa_get_glasses){
+            _me.envelope = new createjs.Bitmap(img)
+            _me.envelope.name = 'envelope'
+            _me.envelope.x = 1550
+            _me.envelope.y = 940
+            _me.envelope.rotation = 35
+            _me.envelope.mask = m
+            _me.envelope.on('click', (e)=>{
+                if(_me.grandpa_get_glasses){
                     _me.showEnvelopeMask(img2)
                 }
             })
 
-            _me.cont.scene.addChild(envelope)
+            _me.cont.scene.addChild(_me.envelope)
 
             return _me
         }
@@ -412,6 +424,8 @@ import { manifest } from './manifest'
 
         add(obj){
             let _me = this
+
+            createjs.Sound.play('sound_pack')
 
             switch (obj.name) {
                 case 'hammer':
@@ -502,6 +516,7 @@ import { manifest } from './manifest'
             hammer_pack.x = -1 * hammer_pack.getBounds().width / 2
             hammer_pack.y = -1 * hammer_pack.getBounds().height / 2
             hammer_pack.on('click', (e)=>{
+                createjs.Sound.play('sound_click')
                 console.log('use')
                 if(!_me.boxs['hammer_pack'].active){
                     _me.activeItem({
@@ -544,6 +559,7 @@ import { manifest } from './manifest'
             glasses_pack.x = -1 * glasses_pack.getBounds().width / 2
             glasses_pack.y = -1 * glasses_pack.getBounds().height / 2
             glasses_pack.on('click', (e)=>{
+                createjs.Sound.play('sound_click')
                 console.log('use')
                 if(!_me.boxs['glasses_pack'].active){
                     _me.activeItem({
